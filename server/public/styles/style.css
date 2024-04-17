@@ -1,3 +1,59 @@
 body {
-  background-color: #fbf0f0;
+  background-color: #353535;
+  color: rgb(168, 168, 168);
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+
+h1 {
+  background-color: black;
+  text-align: center;
+}
+
+#dashboard {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+section {
+  border: .01rem solid rgb(206, 206, 206);
+  margin: 0;
+  background-color: black;
+
+}
+
+img {
+  width: 100%;
+  max-width: 20rem;
+  margin: 0;
+}
+
+h3,
+figcaption {
+  text-align: center;
+  margin: 0;
+  padding: .3rem .5rem .6rem .5rem;
+}
+
+h3 {
+  padding: .2rem 0 .5rem 0;
+  color: rgb(214, 214, 214);
+  font-size: larger;
+}
+
+figure {
+  margin: 0;
+
+}
+
+figcaption {
+  font-style: italic;
+}
+.button-group {
+  display: flex;
+  justify-content: center;
+}
+
+button {
+  padding: .5rem;
+  min-width: 10rem;
 }

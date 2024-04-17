@@ -23,8 +23,7 @@ INSERT INTO "volcanoes"
   ('Lassen', false, 1921, 'United States','https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Lassen_Peak_and_Lake_Helen.jpg/568px-Lassen_Peak_and_Lake_Helen.jpg'),
   ('Mount St. Helens', false, 1980, 'United States','https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/MSH82_st_helens_plume_from_harrys_ridge_05-19-82.jpg/1920px-MSH82_st_helens_plume_from_harrys_ridge_05-19-82.jpg'),
   ('Fernadina', true, 2024, 'Ecuador','https://eoimages.gsfc.nasa.gov/images/imagerecords/152000/152538/fernandinavolcano_oli_20240307_lrg.jpg'),
-  ('Santa Maria', true, 2024, 'Guatamala','https://en.wikipedia.org/wiki/Santa_María_(volcano)#/media/File:Santiaguito_from_Santamaria.jpg'),
-  ('Kilauea', false, 2023, 'United States','https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Kilauea_Fissure_8_cone_erupting_on_6-28-2018.jpg/1920px-Kilauea_Fissure_8_cone_erupting_on_6-28-2018.jpg'),
+  ('Santa Maria', true, 2024, 'Guatamala','https://upload.wikimedia.org/wikipedia/commons/8/8e/Santiaguito_from_Santamaria.jpg'),
   ('Stromboli', true, 2024, 'Italy','https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Aerial_image_of_Stromboli_%28view_from_the_northeast%29.jpg/1920px-Aerial_image_of_Stromboli_%28view_from_the_northeast%29.jpg');
 
 -- Creates a trigger that handles the updated_at magic:

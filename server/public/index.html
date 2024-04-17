@@ -11,7 +11,20 @@
 </head>
 <body>
   <h1>Volcano dashboard</h1> 
+  <button id="add-volcano-button" onclick="addVolcano">+</button>
   <div id="dashboard">
+  </div>
+  <div id="volcano-modal">
+    <h3 id="modal-header"></h3>
+    <form>
+      <input type="text" id="input-text"/>
+      <input type="radio" id="input-erupt-true" value="true"/>
+      <input type="number" id="input-last-year-erupted"/>
+      <input type="text" id="input-country"/>
+      <input type="url" id="input-pic"/>
+      <button onclick="edit-cancel">cancel</button>
+      <button onclick="edit-add-save" id="modal-add-save-button"></button>
+    </form>
   </div>
 </body>
 </html>
