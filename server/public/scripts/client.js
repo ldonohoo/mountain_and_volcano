@@ -155,7 +155,9 @@ function showVolcanoModal(event, mode, volcanoId) {
 }
 
 
-
+function editVolcano(event, volcanoId) {
+    
+}
 
 
 
