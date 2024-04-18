@@ -17,6 +17,23 @@ function getVolcanoes() {
     })
 }
 
+
+function getSingleVolcano(volcanoId) {
+    axios({
+        method: 'GET',
+        url: `/volcanoes/${volcanoId}`
+    })
+    .then((response) => {
+        let volcanoes = response.data;
+        console.log('Successful GET of volcanoes:', volcanoes);
+        // only one item in volcanoes array, return the one volcano
+        editVolcano(volcanoes[0]);
+    })
+    .catch((error) => {
+        console.log('Whoa. GET of volcanoes didn\'t really work.', error);
+    })
+}
+
 function renderVolcanoDashboard(volcanoes) {
     // clear out the volcano dashboard
     let dashboardElement = document.getElementById('dashboard');
@@ -30,8 +47,12 @@ function renderVolcanoDashboard(volcanoes) {
                     <img src="${volcano.pic}"/>
                     <figcaption>${volcano.name} last erupted in ${volcano.last_year_erupted}</figcaption>
                     <div class="button-group">
-                        <button type="button" id="delete-volcano-btn">delete</button>
-                        <button type="button" id="edit-volcano">edit</button>
+                        <button type="button" 
+                                id="delete-volcano-btn"
+                                onclick="deleteVolcano(${volcano.id})">delete</button>
+                        <button type="button" 
+                                id="edit-volcano"
+                                onclick="showVolcanoModal(event, 'edit-mode', ${volcano.id})">edit</button>
                     </div>
                 </figure>
             </section>
@@ -39,8 +60,8 @@ function renderVolcanoDashboard(volcanoes) {
     }
 }
 
-function addVolcano() {
-    let volcano = showVolcanoModal('add-mode');
+function addVolcano(event) {
+    let volcano = showVolcanoModal(event, 'add-mode');
     if (Object.keys(volcano).length > 0) {
         axios({
             method: 'POST',
@@ -57,8 +78,8 @@ function addVolcano() {
     }
 }
 
-function editVolcano() {
-    let volcano = showVolcanoModal('update-mode');
+function editVolcano(event, volcanoId) {
+    let volcano = showVolcanoModal(event, 'update-mode', volcanoId);
     if (Object.keys(volcano).length > 0) {
         axios({
             method: 'PUT',
@@ -75,29 +96,62 @@ function editVolcano() {
     }
 }
 
+function deleteVolcano(volcanoId) {
+    axios({
+        method: 'DELETE',
+        url: `/volcanoes/${volcanoId}`
+    })
+    .then(response => {
+        let volcanoes = response.data;
+        console.log('Delete of volcano successful!', volcanoes);
+        getVolcanoes(volcanoes);
+    })
+    .catch(error => {
+        console.log('Error deleting a volcano!', error);
+    })
+}
+
+
 function clearInputElements() {
 
 
 }
 
-function fetchInputElements() {
-    let 
-}
 
-function showVolcanoModal(mode) {
+
+function showVolcanoModal(event, mode, volcanoId) {
+    event.preventDefault();
+    console.log('in show modal')
     let modalElement = document.getElementById('volcano-modal');
     let modalHeaderElement = document.getElementById('modal-header');
     let modalAddSaveButton = document.getElementById('modal-add-save-button');
+    let inputTextElement = document.getElementById('input-name');
+    let inputEruptTrueElement = document.getElementById('input-erupt-true');
+    let inputLastYearEruptedElement = document.getElementById('input-last-year-erupted');
+    let inputCountry = document.getElementById('input-country');
+    let inputPic = document.getElementById('input-pic');
     if (mode === "add-mode") {
         modalHeaderElement.textContent = 'Add volcano:';
         modalAddSaveButton.textContent = 'add';
-        clearInputElements();
-    } else if (mode === "update-mode") {
-        fetchInputElements();
+        inputTextElement.value = '';
+        inputEruptTrueElement.value = false;
+        inputLastYearEruptedElement.value = '';
+        inputCountry.value = '';
+        inputPic.value = '';
+    } else if (mode === "edit-mode") {
+        modalAddSaveButton.textContent = 'save';
+        let volcano = getSingleVolcano(volcanoId);
+        modalHeaderElement.textContent = 'Add volcano:';
+        modalAddSaveButton.textContent = 'add';
+        inputTextElement.value = volcano.name;
+        inputEruptTrueElement.value = volcano.eruptTrue;
+        inputLastYearEruptedElement.value = volcano.lastYearErupted;
+        inputCountry.value = volcano.country;
+        inputPic.value = volcano.pic;
     } else {
         console.log('invalid mode called on showVolcanoModal');
     }
-    
+    modalElement.style.display = "block";
 }
 
 

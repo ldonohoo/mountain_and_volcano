@@ -11,13 +11,13 @@
 </head>
 <body>
   <h1>Volcano dashboard</h1> 
-  <button id="add-volcano-button" onclick="addVolcano">+</button>
+  <button id="add-volcano-button" onclick="addVolcano(event, 'add-mode')">+</button>
   <div id="dashboard">
   </div>
   <div id="volcano-modal">
     <h3 id="modal-header"></h3>
     <form>
-      <input type="text" id="input-text"/>
+      <input type="text" id="input-name"/>
       <input type="radio" id="input-erupt-true" value="true"/>
       <input type="number" id="input-last-year-erupted"/>
       <input type="text" id="input-country"/>

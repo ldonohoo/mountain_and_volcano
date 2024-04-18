@@ -24,20 +24,40 @@ router.get('/', (req, res) => {
 });
 
 // GET /things/:id - - - - - Respond with one thing.
+router.get('/:id', (req, res) => {
+    console.log('in get single volcano server.js')
+    let volcanoId = req.params.id;
+    sqlText = `
+        SELECT * FROM volcanoes
+            WHERE id = $1
+            ORDER BY id
+    `
+    pool.query(sqlText, [volcanoId])
+    .then((dbResult) => {
+        let volcano = dbResult.rows;
+        console.log('sucessful GET of volcano in /volcanoes/:id route', volcano);
 
+        res.send(volcano);
+    })
+    .catch((dbErr) => {
+        console.log('Error in GET of /volcanoes/:id ', dbErr);
+        res.sendStatus(500);
+    })
+});
 // POST /things - - - - - -  Create one thing.
 
 router.post('/', (req, res) => {
     let volcano = req.body;
     sqlText = `
         INSERT INTO volcanoes 
-            (volcano_name, erupting_now, last_year_erupted, country)
+            (name, erupting_now, last_year_erupted, country, pic)
             VALUES ($1, $2, $3, $4);
     `;
-    pool.query(sqlText, [volcano.volcano_name, 
+    pool.query(sqlText, [volcano.name, 
                         volcano.erupting_now, 
                         volcano.last_year_erupted, 
-                        volcano.country])
+                        volcano.country,
+                        volcano.pic])
     .then((dbResult) => {
         console.log('Add of new volcano sucessfull!!');
         res.sendStatus(201);
