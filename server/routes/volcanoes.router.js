@@ -14,7 +14,6 @@ router.get('/', (req, res) => {
     .then((dbResult) => {
         let volcanoes = dbResult.rows;
         console.log('sucessful GET of volcanoes in /volcanoes route', volcanoes);
-
         res.send(volcanoes);
     })
     .catch((dbErr) => {
@@ -30,13 +29,11 @@ router.get('/:id', (req, res) => {
     sqlText = `
         SELECT * FROM volcanoes
             WHERE id = $1
-            ORDER BY id
     `
     pool.query(sqlText, [volcanoId])
     .then((dbResult) => {
         let volcano = dbResult.rows;
         console.log('sucessful GET of volcano in /volcanoes/:id route', volcano);
-
         res.send(volcano);
     })
     .catch((dbErr) => {
@@ -44,14 +41,15 @@ router.get('/:id', (req, res) => {
         res.sendStatus(500);
     })
 });
+
 // POST /things - - - - - -  Create one thing.
 
 router.post('/', (req, res) => {
-    let volcano = req.body;
+    let volcano = req.body.volcano;
     sqlText = `
         INSERT INTO volcanoes 
             (name, erupting_now, last_year_erupted, country, pic)
-            VALUES ($1, $2, $3, $4);
+            VALUES ($1, $2, $3, $4, $5);
     `;
     pool.query(sqlText, [volcano.name, 
                         volcano.erupting_now, 
@@ -88,7 +86,34 @@ router.delete('/:id', (req, res) => {
 }); 
 
 
-// PUT /things/:id - - - - - Update one thing.
+// PUT /things/:id - - - - - Update one thing
+router.put('/:id', (req, res) => {
+    let volcanoId = req.params.id;
+    let volcano = req.body.volcano;
+    let sqlText = `
+        UPDATE volcanoes
+            SET name = $2,
+                erupting_now = $3,
+                last_year_erupted = $4,
+                country = $5,
+                pic = $6
+            WHERE id = $1;
+        `;
+    pool.query(sqlText, [volcanoId,
+                         volcano.name, 
+                         volcano.erupting_now, 
+                         volcano.last_year_erupted, 
+                         volcano.country,
+                         volcano.pic])
+    .then(response => {
+        console.log('Update of volcano worked in PUT volcanoes/:id');
+        res.sendStatus(200);
+    })
+    .catch(err => {
+        console.log('Error in update of a volcano in PUT /volcanoes/:id', err);
+        res.sendStatus(500);
+    })
+});
 
 
 module.exports = router;
